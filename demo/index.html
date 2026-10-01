@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Candidatura — Desenvolvedor Fullstack — Demo Job Autofill</title>
+    <style>
+      :root { font-family: Inter, system-ui, sans-serif; color: #0f172a; background: #f8fafc; }
+      body { max-width: 720px; margin: 32px auto; padding: 0 16px 64px; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.05rem; margin: 0 0 12px; }
+      p.lead { color: #475569; }
+      fieldset { border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; padding: 16px; margin: 16px 0; }
+      label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+      input, select, textarea { font: inherit; font-weight: 400; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .radio { flex-direction: row; align-items: center; font-weight: 400; }
+      .exp { border: 1px dashed #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+      button, .add { background: #4f46e5; color: #fff; border: 0; border-radius: 8px; padding: 10px 14px; font-weight: 600; cursor: pointer; }
+      .add { background: #eef2ff; color: #3730a3; margin-top: 4px; }
+    </style>
+  </head>
+  <body>
+    <p>Vaga</p>
+    <h1>Desenvolvedor Fullstack</h1>
+    <p class="lead">
+      Estamos contratando para o time de produto no Brasil. Experiência com React e TypeScript é um
+      diferencial. Preencha o formulário abaixo — esta página existe para testar a extensão Job Autofill.
+    </p>
+
+    <form id="job-form">
+      <fieldset>
+        <legend>Dados pessoais</legend>
+        <div class="row">
+          <label>Nome completo <input name="full_name" required /></label>
+          <label>E-mail <input type="email" name="email" required /></label>
+          <label>Telefone <input type="tel" name="phone" /></label>
+          <label>LinkedIn <input type="url" name="linkedin" placeholder="https://" /></label>
+          <label>Cidade <input name="city" /></label>
+          <label>
+            Estado
+            <select name="state">
+              <option value="">Selecione</option>
+              <option>SP</option>
+              <option>RJ</option>
+              <option>MG</option>
+              <option>RS</option>
+              <option>PR</option>
+              <option>SC</option>
+              <option>BA</option>
+              <option>PE</option>
+              <option>CE</option>
+              <option>DF</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Elegibilidade</legend>
+        <p>Você tem autorização para trabalhar no Brasil?</p>
+        <label class="radio"><input type="radio" name="work_auth" value="sim" /> Sim</label>
+        <label class="radio"><input type="radio" name="work_auth" value="nao" /> Não</label>
+        <label class="radio">
+          <input type="checkbox" name="remote" /> Aceito trabalho remoto
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Experiência profissional</legend>
+        <div id="experiences"></div>
+        <button type="button" class="add" id="add-experience">Adicionar experiência</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Carta e currículo</legend>
+        <label>
+          Por que você quer esta vaga?
+          <textarea name="cover_letter" rows="5" placeholder="Escreva um parágrafo..."></textarea>
+        </label>
+        <label>Currículo (PDF) <input type="file" name="resume" accept="application/pdf" /></label>
+      </fieldset>
+
+      <button type="submit">Enviar candidatura</button>
+    </form>
+
+    <script>
+      const list = document.getElementById('experiences');
+      const addBtn = document.getElementById('add-experience');
+
+      function addExperience() {
+        const wrap = document.createElement('div');
+        wrap.className = 'exp';
+        wrap.innerHTML = `
+          <div class="row">
+            <label>Empresa <input name="company[]" /></label>
+            <label>Cargo <input name="title[]" /></label>
+            <label>Início <input name="start[]" placeholder="YYYY-MM" /></label>
+            <label>Fim <input name="end[]" placeholder="YYYY-MM ou atual" /></label>
+          </div>
+          <label>Descrição <textarea name="desc[]" rows="3"></textarea></label>
+        `;
+        list.appendChild(wrap);
+      }
+
+      addBtn.addEventListener('click', addExperience);
+      addExperience();
+
+      document.getElementById('job-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Demo: candidatura não é enviada.');
+      });
+    </script>
+  </body>
+</html>
